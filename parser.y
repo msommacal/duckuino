@@ -4,6 +4,8 @@
     int yylex();
     int yyerror();
 
+    int yylineno;
+
     void header();
     void footer();
 %}
@@ -66,7 +68,7 @@ key: alt {printf("Keyboard.press(KEY_LEFT_ALT);\n");}
 %%
 
 int yyerror(char *s) {
-    printf("yyerror : %s\n",s);
+    printf("\033[31merror:\033[0m %s \033[32m(l.%d)\033[0m\n",s,yylineno);
     return 0;
 }
 
