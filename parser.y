@@ -28,44 +28,44 @@ lines: line new_line lines
      | line
      |
 
-line: keys {printf("Keyboard.releaseAll();\n");print_default_delay();}
-    | delay {printf("delay(%d);\n", yylval.integer*10);}
+line: keys {printf("  Keyboard.releaseAll();\n");print_default_delay();}
+    | delay {printf("  delay(%d);\n", yylval.integer*10);}
     | default_delay {d = yylval.integer*10;}
-    | rem {printf("// %s\n", yylval.text);}
-    | string {printf("Keyboard.print(\"%s\");\n", yylval.text);print_default_delay();}
+    | rem {printf("  // %s\n", yylval.text);}
+    | string {printf("  Keyboard.print(\"%s\");\n", yylval.text);print_default_delay();}
     | new_line {printf("\n");}
 
 keys: key separator keys
     | key
 
-key: alt {printf("Keyboard.press(KEY_LEFT_ALT);\n");}
-   | altgr {printf("Keyboard.press(KEY_RIGHT_ALT);\n");}
-   | backspace {printf("Keyboard.press(KEY_BACKSPACE);\n");}
-   | menu {printf("Keyboard.press(0x76+0x88);\n");}
-   | pause_key {printf("Keyboard.press(0x48+0x88);\n");}
-   | capslock {printf("Keyboard.press(KEY_CAPS_LOCK);\n");}
-   | ctrl {printf("Keyboard.press(KEY_LEFT_CTRL);\n");}
-   | delete {printf("Keyboard.press(KEY_DELETE);\n");}
-   | down {printf("Keyboard.press(KEY_DOWN_ARROW);\n");}
-   | end {printf("Keyboard.press(KEY_END);\n");}
-   | enter {printf("Keyboard.press(KEY_RETURN);\n");}
-   | esc {printf("Keyboard.press(KEY_ESC);\n");}
-   | function {printf("Keyboard.press(KEY_F%d);\n", yylval.integer);}
-   | gui {printf("Keyboard.press(KEY_LEFT_GUI);\n");}
-   | home {printf("Keyboard.press(KEY_HOME);\n");}
-   | insert {printf("Keyboard.press(KEY_INSERT);\n");}
-   | left {printf("Keyboard.press(KEY_LEFT_ARROW);\n");}
-   | numlock {printf("Keyboard.press(0x53+0x88);\n");}
-   | pagedown {printf("Keyboard.press(KEY_PAGE_DOWN);\n");}
-   | pageup {printf("Keyboard.press(KEY_PAGE_UP);\n");}
-   | printscreen {printf("Keyboard.press(0x46+0x88);\n");}
-   | right {printf("Keyboard.press(KEY_RIGHT_ARROW);\n");}
-   | scrolllock {printf("Keyboard.press(0x47+0x88);\n");}
-   | shift {printf("Keyboard.press(KEY_LEFT_SHIFT);\n");}
-   | space {printf("Keyboard.press(' ');\n");}
-   | tab {printf("Keyboard.press(KEY_TAB);\n");}
-   | up {printf("Keyboard.press(KEY_UP_ARROW);\n");}
-   | letter {printf("Keyboard.press('%s');\n", yylval.text);}
+key: alt {printf("  Keyboard.press(KEY_LEFT_ALT);\n");}
+   | altgr {printf("  Keyboard.press(KEY_RIGHT_ALT);\n");}
+   | backspace {printf("  Keyboard.press(KEY_BACKSPACE);\n");}
+   | menu {printf("  Keyboard.press(0x76+0x88);\n");}
+   | pause_key {printf("  Keyboard.press(0x48+0x88);\n");}
+   | capslock {printf("  Keyboard.press(KEY_CAPS_LOCK);\n");}
+   | ctrl {printf("  Keyboard.press(KEY_LEFT_CTRL);\n");}
+   | delete {printf("  Keyboard.press(KEY_DELETE);\n");}
+   | down {printf("  Keyboard.press(KEY_DOWN_ARROW);\n");}
+   | end {printf("  Keyboard.press(KEY_END);\n");}
+   | enter {printf("  Keyboard.press(KEY_RETURN);\n");}
+   | esc {printf("  Keyboard.press(KEY_ESC);\n");}
+   | function {printf("  Keyboard.press(KEY_F%d);\n", yylval.integer);}
+   | gui {printf("  Keyboard.press(KEY_LEFT_GUI);\n");}
+   | home {printf("  Keyboard.press(KEY_HOME);\n");}
+   | insert {printf("  Keyboard.press(KEY_INSERT);\n");}
+   | left {printf("  Keyboard.press(KEY_LEFT_ARROW);\n");}
+   | numlock {printf("  Keyboard.press(0x53+0x88);\n");}
+   | pagedown {printf("  Keyboard.press(KEY_PAGE_DOWN);\n");}
+   | pageup {printf("  Keyboard.press(KEY_PAGE_UP);\n");}
+   | printscreen {printf("  Keyboard.press(0x46+0x88);\n");}
+   | right {printf("  Keyboard.press(KEY_RIGHT_ARROW);\n");}
+   | scrolllock {printf("  Keyboard.press(0x47+0x88);\n");}
+   | shift {printf("  Keyboard.press(KEY_LEFT_SHIFT);\n");}
+   | space {printf("  Keyboard.press(' ');\n");}
+   | tab {printf("  Keyboard.press(KEY_TAB);\n");}
+   | up {printf("  Keyboard.press(KEY_UP_ARROW);\n");}
+   | letter {printf("  Keyboard.press('%s');\n", yylval.text);}
 %%
 
 int yyerror(char *s) {
@@ -76,21 +76,21 @@ int yyerror(char *s) {
 void header() {
     printf("#include <Keyboard.h>\n\n");
     printf("void setup() {\n");
-    printf("// keyboard connection\n");
-    printf("Keyboard.begin();\n");
-    printf("delay(500);\n\n");
+    printf("  // keyboard connection\n");
+    printf("  Keyboard.begin();\n");
+    printf("  delay(500);\n\n");
 }
 
 void print_default_delay() {
     if (d != 0) {
-        printf("delay(%d);\n", d);
+        printf("  delay(%d);\n", d);
     }
 }
 
 void footer() {
     printf("\n");
-    printf("// keyboard disconnection\n");
-    printf("Keyboard.end();\n");
+    printf("  // keyboard disconnection\n");
+    printf("  Keyboard.end();\n");
     printf("}\n\n");
     printf("void loop() {}\n");
 }
