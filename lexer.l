@@ -35,9 +35,13 @@ CONTROL|CTRL {
     return ctrl;
 }
 
-(DEFAULT_DELAY|DEFAULTDELAY)\ [0-9]+ {
-    yylval.text = malloc(sizeof(char)*(strlen(yytext)+1));
-    strcpy(yylval.text, yytext);
+DEFAULT_DELAY\ [0-9]+ {
+    yylval.integer = atoi(&yytext[14]);
+    return default_delay;
+}
+
+DEFAULTDELAY\ [0-9]+ {
+    yylval.integer = atoi(&yytext[13]);
     return default_delay;
 }
 

@@ -4,7 +4,7 @@ Duckuino is a translator from Ducky Script to Arduino, using Flex and Bison.
 
 ![Screenshot](img/screenshot.png?raw=true "Screenshot")
 
-All keywords defined in the documentation (available [here](https://github.com/hak5darren/USB-Rubber-Ducky/wiki/Duckyscript)) are supported with the exception of *DEFAULT\_DELAY/DEFAULTDELAY* and *REPEAT*. The addition of *ALTGR* and *BACKSPACE* keys is the only freedom taken from this specification.
+All keywords defined in the documentation (available [here](https://github.com/hak5darren/USB-Rubber-Ducky/wiki/Duckyscript)) are supported except for *REPEAT*. The addition of *ALTGR* and *BACKSPACE* keys is the only freedom taken from this specification.
 
 ## Getting Started
 

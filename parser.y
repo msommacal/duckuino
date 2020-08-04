@@ -7,7 +7,10 @@
     int yylineno;
 
     void header();
+    void print_default_delay();
     void footer();
+
+    int d = 0;
 %}
 
 %token alt altgr backspace default_delay delay menu pause_key capslock ctrl delete down end enter esc function gui home insert left letter new_line numlock pagedown pageup printscreen rem repeat right scrolllock separator shift space string tab up
@@ -21,18 +24,16 @@
 %%
 file: {header();} lines {footer();}
 
-lines: line new_line {printf("\n");} lines
+lines: line new_line lines
      | line
      |
 
-line: keys {printf("Keyboard.releaseAll();");}
-    | time
-    | rem {printf("// %s", yylval.text);}
-    | string {printf("Keyboard.print(\"%s\");", yylval.text);}
+line: keys {printf("Keyboard.releaseAll();\n");print_default_delay();}
+    | delay {printf("delay(%d);\n", yylval.integer*10);}
+    | default_delay {d = yylval.integer*10;}
+    | rem {printf("// %s\n", yylval.text);}
+    | string {printf("Keyboard.print(\"%s\");\n", yylval.text);print_default_delay();}
     | new_line {printf("\n");}
-
-time: default_delay {printf("default_delay\n");}
-    | delay {printf("delay(%d);", yylval.integer*10);}
 
 keys: key separator keys
     | key
@@ -75,9 +76,21 @@ int yyerror(char *s) {
 void header() {
     printf("#include <Keyboard.h>\n\n");
     printf("void setup() {\n");
+    printf("// keyboard connection\n");
+    printf("Keyboard.begin();\n");
+    printf("delay(500);\n\n");
+}
+
+void print_default_delay() {
+    if (d != 0) {
+        printf("delay(%d);\n", d);
+    }
 }
 
 void footer() {
+    printf("\n");
+    printf("// keyboard disconnection\n");
+    printf("Keyboard.end();\n");
     printf("}\n\n");
     printf("void loop() {}\n");
 }
