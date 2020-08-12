@@ -22,17 +22,19 @@
 }
 
 %%
-file: {header();} lines {footer();}
+file: {header();} blocs {footer();}
 
-lines: line new_line lines
-     | line
-     |
+blocs: bloc blocs
+     | bloc
 
-line: keys {printf("  Keyboard.releaseAll();\n");print_default_delay();}
-    | delay {printf("  delay(%d);\n", yylval.integer*10);}
-    | default_delay {d = yylval.integer*10;}
-    | rem {printf("  // %s\n", yylval.text);}
-    | string {printf("  Keyboard.print(\"%s\");\n", yylval.text);print_default_delay();}
+bloc: line repeat new_line
+    | line
+
+line: keys {printf("  Keyboard.releaseAll();\n");print_default_delay();} new_line
+    | delay {printf("  delay(%d);\n", yylval.integer*10);} new_line
+    | default_delay {d = yylval.integer*10;} new_line
+    | rem {printf("  // %s\n", yylval.text);} new_line
+    | string {printf("  Keyboard.print(\"%s\");\n", yylval.text);print_default_delay();} new_line
     | new_line {printf("\n");}
 
 keys: key separator keys
