@@ -8,6 +8,7 @@
 
     void header();
     void print_default_delay();
+    void print_string();
     void footer();
 
     int d = 0;
@@ -34,7 +35,7 @@ line: keys {printf("  Keyboard.releaseAll();\n");print_default_delay();} new_lin
     | delay {printf("  delay(%d);\n", yylval.integer*10);} new_line
     | default_delay {d = yylval.integer*10;} new_line
     | rem {printf("  // %s\n", yylval.text);} new_line
-    | string {printf("  Keyboard.print(\"%s\");\n", yylval.text);print_default_delay();} new_line
+    | string {print_string(yylval.text);print_default_delay();} new_line
     | new_line {printf("\n");}
 
 keys: key separator keys
@@ -87,6 +88,21 @@ void print_default_delay() {
     if (d != 0) {
         printf("  delay(%d);\n", d);
     }
+}
+
+void print_string(char *s) {
+    printf("  Keyboard.print(\"");
+
+    int i = 0;
+    while (s[i] != '\0') {
+        if (s[i] == '\"') {
+            printf("\\");
+        }
+        printf("%c", s[i]);
+        i++;
+    }
+
+    printf("\");\n");
 }
 
 void footer() {
