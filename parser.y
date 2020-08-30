@@ -95,7 +95,7 @@ void print_string(char *s) {
 
     int i = 0;
     while (s[i] != '\0') {
-        if (s[i] == '\"') {
+        if (s[i] == '\"' || s[i] == '\\') {
             printf("\\");
         }
         printf("%c", s[i]);
